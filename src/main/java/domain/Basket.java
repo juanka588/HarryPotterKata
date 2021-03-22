@@ -1,24 +1,36 @@
 package domain;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Basket {
     public double getPrice(Book... books) {
         double total = 0.0;
-        for (Book book : books) {
-            total += book.getBasePrice();
+        List<List<Book>> groupOfBooks = buildBookGroups(books);
+        for (List<Book> group : groupOfBooks) {
+            total += getPricePerBookGroup(group);
         }
-        double discount = getDiscountFor(books);
-        return total * discount;
+        return total;
     }
 
-    private double getDiscountFor(Book... books) {
+    private List<List<Book>> buildBookGroups(Book[] books) {
         Map<String, List<Book>> booksByTitle = Arrays.stream(books).collect(Collectors.groupingBy(Book::getTitle));
 
-        return getDiscountForDistinctNumberOfBooks(booksByTitle.keySet().size());
+        List<Book> group = booksByTitle.values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        List<List<Book>> groups = new ArrayList<>();
+        groups.add(group);
+        return groups;
+    }
+
+    private double getPricePerBookGroup(Collection<Book> distinctBooks) {
+        double total = 0.0;
+        for (Book book : distinctBooks) {
+            total += book.getBasePrice();
+        }
+        double discount = getDiscountForDistinctNumberOfBooks(distinctBooks.size());
+        return total * discount;
     }
 
     private double getDiscountForDistinctNumberOfBooks(int numberOfDistinctBooks) {
