@@ -6,6 +6,14 @@ public class Basket {
         for (Book book : books) {
             total += book.getBasePrice();
         }
-        return total;
+        double discount = getDiscountFor(books);
+        return total * discount;
+    }
+
+    private double getDiscountFor(Book... books) {
+        if (books.length > 1) {
+            return 1.0 - 0.05; // 5% discount
+        }
+        return 1.0;
     }
 }
