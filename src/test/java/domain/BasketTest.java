@@ -47,9 +47,16 @@ class BasketTest {
     }
 
     @org.junit.jupiter.api.Test
-    void getPriceForOneBooksTwoCopies() {
+    void getPriceForOneBookTwoCopies() {
         Basket sut = new Basket();
         double current = sut.getPrice(new Book("HP1"), new Book("HP1"));
         assertEquals(8.0 * 2, current);
+    }
+
+    @org.junit.jupiter.api.Test
+    void getPriceForThreeBooksOneCopy() {
+        Basket sut = new Basket();
+        double current = sut.getPrice(new Book("HP1"), new Book("HP1"), new Book("HP2"));
+        assertEquals(8.0 * 3 * 0.95, current);
     }
 }
