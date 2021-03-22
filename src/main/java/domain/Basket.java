@@ -12,6 +12,9 @@ public class Basket {
 
     private double getDiscountFor(Book... books) {
         if (books.length == 2) {
+            if (books[0].getTitle().equals(books[1].getTitle())) {
+                return 1.0;
+            }
             return 1.0 - 0.05; // 5% discount
         }
         if (books.length == 3) {

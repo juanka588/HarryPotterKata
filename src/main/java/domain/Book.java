@@ -10,4 +10,8 @@ public class Book {
     public double getBasePrice() {
         return 8.0;
     }
+
+    public String getTitle() {
+        return title;
+    }
 }
