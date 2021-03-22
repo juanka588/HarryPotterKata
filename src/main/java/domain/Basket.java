@@ -17,6 +17,12 @@ public class Basket {
         if (books.length == 3) {
             return 1.0 - 0.10; // 10% discount
         }
+        if (books.length == 4) {
+            return 1.0 - 0.20; // 20% discount
+        }
+        if (books.length == 5) {
+            return 1.0 - 0.25; // 25% discount
+        }
         return 1.0;
     }
 }
