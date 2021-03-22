@@ -15,12 +15,21 @@ public class Basket {
 
     private List<List<Book>> buildBookGroups(Book[] books) {
         Map<String, List<Book>> booksByTitle = Arrays.stream(books).collect(Collectors.groupingBy(Book::getTitle));
-
-        List<Book> group = booksByTitle.values().stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
         List<List<Book>> groups = new ArrayList<>();
-        groups.add(group);
+
+        int remainingBooks = booksByTitle.values().stream().mapToInt(List::size).sum();
+        while (remainingBooks > 0) {
+            List<Book> group = new ArrayList<>();
+            for (String bookTitle : booksByTitle.keySet()) {
+                List<Book> booksOfTitle = booksByTitle.get(bookTitle);
+                if (!booksOfTitle.isEmpty()) {
+                    group.add(booksOfTitle.remove(booksOfTitle.size() - 1));
+                }
+            }
+            groups.add(group);
+
+            remainingBooks = booksByTitle.values().stream().mapToInt(List::size).sum();
+        }
         return groups;
     }
 
