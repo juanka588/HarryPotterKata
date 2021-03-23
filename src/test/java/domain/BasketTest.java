@@ -89,4 +89,35 @@ class BasketTest {
         );
         assertEquals((8 * 4 * 0.8) + (8 * 4 * 0.8) , current);
     }
+
+    @org.junit.jupiter.api.Test
+    void getPriceForEdgeCase() {
+        Basket sut = new Basket();
+        double current = sut.getPrice(
+                new Book("HP1"),
+                new Book("HP1"),
+                new Book("HP1"),
+                new Book("HP1"),
+                new Book("HP1"),
+                new Book("HP2"),
+                new Book("HP2"),
+                new Book("HP2"),
+                new Book("HP2"),
+                new Book("HP2"),
+                new Book("HP3"),
+                new Book("HP3"),
+                new Book("HP3"),
+                new Book("HP3"),
+                new Book("HP4"),
+                new Book("HP4"),
+                new Book("HP4"),
+                new Book("HP4"),
+                new Book("HP4"),
+                new Book("HP5"),
+                new Book("HP5"),
+                new Book("HP5"),
+                new Book("HP5")
+        );
+        assertEquals(3 * (8 * 5 * 0.75) + 2 * (8 * 4 * 0.8) , current);
+    }
 }
