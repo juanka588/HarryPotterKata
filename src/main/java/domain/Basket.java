@@ -19,14 +19,18 @@ public class BookStore {
 
 
     public double getPrice(Book... books) {
-        return getPrice(Arrays.stream(books).collect(Collectors.toList()));
+        return getPrice(
+                Arrays
+                        .stream(books)
+                        .collect(Collectors.toList())
+        );
     }
 
     private double getPrice(List<Book> books) {
-        List<Bucket> splittedBooks = new ArrayList<>();
+        List<Bucket> bookBuckets = new ArrayList<>();
         for (Book book : books) {
             boolean isBookAdded = false;
-            for (Bucket bucket : splittedBooks) {
+            for (Bucket bucket : bookBuckets) {
                 if (!bucket.hasBook(book) && !bucket.isFull()) {
                     bucket.addBook(book);
                     isBookAdded = true;
@@ -37,14 +41,19 @@ public class BookStore {
             if (!isBookAdded) {
                 Bucket newBucket = new Bucket();
                 newBucket.addBook(book);
-                splittedBooks.add(newBucket);
+                bookBuckets.add(newBucket);
             }
 
-            splittedBooks.sort(Comparator.comparing(Bucket::getNumberOfBooks));
+            bookBuckets.sort(Comparator.comparing(Bucket::getNumberOfBooks));
         }
 
 
-        Optional<Double> reduce = splittedBooks.stream().map(Bucket::getBucketPrice).reduce(Double::sum);
+        Optional<Double> reduce =
+                bookBuckets
+                        .stream()
+                        .map(Bucket::getBucketPrice)
+                        .reduce(Double::sum);
+
         return reduce.isPresent() ? reduce.get() : 0;
     }
 
@@ -64,7 +73,7 @@ public class BookStore {
         }
 
         public boolean isFull() {
-            return getNumberOfBooks()==BUCKET_LIMIT;
+            return getNumberOfBooks() == BUCKET_LIMIT;
         }
 
         public void addBook(Book book) {

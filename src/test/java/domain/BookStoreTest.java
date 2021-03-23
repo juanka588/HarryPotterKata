@@ -10,34 +10,70 @@ class BookStoreTest {
 
     @org.junit.jupiter.api.Test
     void testGetPrice_givenOnlyOneBookOfTheSeries_ItReturnsMultiplesOfStandardBookPrice() {
-        assertEquals(8.0, new BookStore().getPrice(new Book.ChamberOfSecrets()));
-        assertEquals(2 * 8.0, new BookStore().getPrice(new Book.ChamberOfSecrets(), new Book.ChamberOfSecrets()));
+        assertEquals(8.0,
+                new BookStore().getPrice(new Book.ChamberOfSecrets())
+        );
+
+        assertEquals(2 * 8.0,
+                new BookStore().getPrice(new Book.ChamberOfSecrets(), new Book.ChamberOfSecrets())
+        );
     }
 
     @org.junit.jupiter.api.Test
     void testGetPrice_givenTwoDifferentBooksInTheSeries_ItReturnsPriceWithReduction() {
-        assertEquals((2 * 8.0) * 0.95, new BookStore().getPrice(new Book.ChamberOfSecrets(), new Book.GobletOfFire()));
-        assertEquals((2 * 8.0) * 0.95, new BookStore().getPrice(new Book.ChamberOfSecrets(), new Book.PhilosophalStone()));
+        assertEquals((2 * 8.0) * 0.95,
+                new BookStore().getPrice(
+                        new Book.ChamberOfSecrets(),
+                        new Book.GobletOfFire())
+        );
+
+        assertEquals((2 * 8.0) * 0.95,
+                new BookStore().getPrice(
+                        new Book.ChamberOfSecrets(),
+                        new Book.PhilosophalStone())
+        );
     }
 
     @org.junit.jupiter.api.Test
     void testGetPrice_givenThreeDifferentBooksInTheSeries_ItReturnsPriceWithReduction() {
-        assertEquals((3 * 8.0) * 0.9, new BookStore().getPrice(new Book.ChamberOfSecrets(), new Book.GobletOfFire(), new Book.PhilosophalStone()));
+        assertEquals((3 * 8.0) * 0.9,
+                new BookStore().getPrice(
+                        new Book.ChamberOfSecrets(),
+                        new Book.GobletOfFire(),
+                        new Book.PhilosophalStone())
+        );
     }
 
     @org.junit.jupiter.api.Test
     void testGetPrice_givenFourDifferentBooksInTheSeries_ItReturnsPriceWithReduction() {
-        assertEquals((4 * 8.0) * 0.8, new BookStore().getPrice(new Book.ChamberOfSecrets(), new Book.GobletOfFire(), new Book.PhilosophalStone(), new Book.PrisonerAzkaban()));
+        assertEquals((4 * 8.0) * 0.8,
+                new BookStore().getPrice(
+                        new Book.ChamberOfSecrets(),
+                        new Book.GobletOfFire(),
+                        new Book.PhilosophalStone(),
+                        new Book.PrisonerAzkaban())
+        );
     }
 
     @org.junit.jupiter.api.Test
     void testGetPrice_givenFiveDifferentBooksInTheSeries_ItReturnsPriceWithReduction() {
-        assertEquals((5 * 8.0) * 0.75, new BookStore().getPrice(new Book.ChamberOfSecrets(), new Book.GobletOfFire(), new Book.PhilosophalStone(), new Book.PrisonerAzkaban(), new Book.OrderOfPhoenix()));
+        assertEquals((5 * 8.0) * 0.75,
+                new BookStore().getPrice(
+                        new Book.ChamberOfSecrets(),
+                        new Book.GobletOfFire(),
+                        new Book.PhilosophalStone(),
+                        new Book.PrisonerAzkaban(),
+                        new Book.OrderOfPhoenix())
+        );
     }
 
     @org.junit.jupiter.api.Test
     void testGetPrice_givenSeveralDiscounts_ItReturnsAllDiscounts() {
-        assertEquals(2 * 8.0 + (2 * 8.0) * 0.95, new BookStore().getPrice(new Book.ChamberOfSecrets(), new Book.ChamberOfSecrets(), new Book.ChamberOfSecrets(), new Book.PrisonerAzkaban()));
+        assertEquals(2 * 8.0 + (2 * 8.0) * 0.95,
+                new BookStore().getPrice(
+                        new Book.ChamberOfSecrets(), new Book.ChamberOfSecrets(), new Book.ChamberOfSecrets(),
+                        new Book.PrisonerAzkaban())
+        );
     }
 
     @org.junit.jupiter.api.Test
@@ -74,8 +110,7 @@ class BookStoreTest {
         );
     }
 
-    private static class FakeBook implements Book{
-
+    private static class FakeBook implements Book {
         @Override
         public String getTitle() {
             return "Fake Book";
