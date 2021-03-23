@@ -15,20 +15,28 @@ public class Basket {
 
     private List<List<Book>> buildBookGroups(Book[] books) {
         Map<String, List<Book>> booksByTitle = Arrays.stream(books).collect(Collectors.groupingBy(Book::getTitle));
-        List<List<Book>> groups = new ArrayList<>();
 
-        int remainingBooks = booksByTitle.values().stream().mapToInt(List::size).sum();
-        while (remainingBooks > 0) {
+        List<Book> mostRepeatedBook = booksByTitle.values().stream().max(Comparator.comparingInt(List::size)).orElseGet(ArrayList::new);
+        List<List<Book>> groups = new ArrayList<>(mostRepeatedBook.size());
+
+        String key = null;
+        for (Book copy : mostRepeatedBook) {
+            key = copy.getTitle();
             List<Book> group = new ArrayList<>();
-            for (String bookTitle : booksByTitle.keySet()) {
-                List<Book> booksOfTitle = booksByTitle.get(bookTitle);
-                if (!booksOfTitle.isEmpty()) {
-                    group.add(booksOfTitle.remove(booksOfTitle.size() - 1));
-                }
-            }
+            group.add(copy);
             groups.add(group);
+        }
 
-            remainingBooks = booksByTitle.values().stream().mapToInt(List::size).sum();
+        booksByTitle.remove(key, mostRepeatedBook);
+
+        while (!booksByTitle.isEmpty()) {
+            mostRepeatedBook = booksByTitle.values().stream().max(Comparator.comparingInt(List::size)).orElseGet(ArrayList::new);
+            for (Book book : mostRepeatedBook) {
+                List<Book> group = groups.stream().min(Comparator.comparingInt(List::size)).orElseGet(ArrayList::new);
+                group.add(book);
+                key = book.getTitle();
+            }
+            booksByTitle.remove(key, mostRepeatedBook);
         }
         return groups;
     }
