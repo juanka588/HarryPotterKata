@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BasketTest {
 
     @Test
-    void getPrice_givenEmptyBasket() {
+    void getPrice_givenOneBookOfTheSeries_itReturnsUnitPrice() {
         Basket sut = new Basket();
         double current = sut.getPrice();
-        assertEquals(0.0, current);
+        assertEquals(8.0, current);
     }
 
     /**
