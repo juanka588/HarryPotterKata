@@ -47,4 +47,17 @@ class BasketTest {
         // Assert
         assertEquals(2 * 8.0 * 0.95, totalPrice);
     }
+
+    @org.junit.jupiter.api.Test
+    void givenTwoDifferentBooksOneCopyInBasketThenPriceIsDiscounted() {
+        // Arrange
+        Basket sut = new Basket();
+        // Act
+        Book hp1 = new Book("hp1");
+        Book hp1Copy = new Book("hp1");
+        Book hp2 = new Book("hp2");
+        double totalPrice = sut.getPrice(hp1, hp1Copy, hp2);
+        // Assert
+        assertEquals(2 * 8.0 * 0.95 + 8.0, totalPrice);
+    }
 }
