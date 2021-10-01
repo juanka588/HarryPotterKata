@@ -29,6 +29,8 @@ class Bucket {
                 return Basket.THREE_DIFFERENT_BOOKS_DISCOUNT;
             case 4:
                 return Basket.FOUR_DIFFERENT_BOOKS_DISCOUNT;
+                case 5:
+                return Basket.FIVE_DIFFERENT_BOOKS_DISCOUNT;
             default:
                 return 1;
         }

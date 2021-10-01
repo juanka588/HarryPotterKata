@@ -8,6 +8,7 @@ public class Basket {
     public static final double TWO_DIFFERENT_BOOKS_DISCOUNT = 0.95;
     public static final double THREE_DIFFERENT_BOOKS_DISCOUNT = 0.90;
     public static final double FOUR_DIFFERENT_BOOKS_DISCOUNT = 0.80;
+    public static final double FIVE_DIFFERENT_BOOKS_DISCOUNT = 0.75;
 
     public double getPrice(Book... books) {
         List<Bucket> buckets = buildBuckets(books);
