@@ -21,11 +21,14 @@ class Bucket {
 
     private double computeDiscount() {
         int numDistinct = size();
+
         switch (numDistinct) {
             case 2:
                 return Basket.TWO_DIFFERENT_BOOKS_DISCOUNT;
             case 3:
                 return Basket.THREE_DIFFERENT_BOOKS_DISCOUNT;
+            case 4:
+                return Basket.FOUR_DIFFERENT_BOOKS_DISCOUNT;
             default:
                 return 1;
         }
