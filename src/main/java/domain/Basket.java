@@ -37,22 +37,10 @@ public class Basket {
     private double getPrice(List<Book> books) {
         List<Bucket> bookBuckets = new ArrayList<>();
         for (Book book : books) {
-            boolean isBookAdded = false;
-            for (Bucket bucket : bookBuckets) {
-                if (!bucket.hasBook(book) && !bucket.isFull()) {
-                    bucket.addBook(book);
-                    isBookAdded = true;
-                    break;
-                }
-            }
 
-            if (!isBookAdded) {
-                Bucket newBucket = new Bucket();
-                newBucket.addBook(book);
-                bookBuckets.add(newBucket);
-            }
+            final var bucket = getOrCreateBucket(bookBuckets, book);
 
-            bookBuckets.sort(Comparator.comparing(Bucket::getNumberOfBooks));
+            bucket.addBook(book);
         }
 
 
@@ -63,6 +51,20 @@ public class Basket {
                         .reduce(Double::sum);
 
         return reduce.isPresent() ? reduce.get() : 0;
+    }
+
+    private Bucket getOrCreateBucket(List<Bucket> bookBuckets, Book book) {
+        bookBuckets.sort(Comparator.comparing(Bucket::getNumberOfBooks));
+
+        for (Bucket bucket : bookBuckets) {
+            if (!bucket.hasBook(book) && !bucket.isFull()) {
+                return bucket;
+            }
+        }
+
+        final var newBucket = new Bucket();
+        bookBuckets.add(newBucket);
+        return newBucket;
     }
 
     static class Bucket {
