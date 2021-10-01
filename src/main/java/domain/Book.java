@@ -17,7 +17,7 @@ public class Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Book)) return false;
-        Book book = (Book) o;
+        var book = (Book) o;
         return Objects.equals(title, book.title);
     }
 

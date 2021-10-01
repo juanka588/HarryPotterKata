@@ -15,14 +15,14 @@ class BucketBuilder {
     }
 
     Bucket createBucket() {
-        Bucket group = new Bucket();
-        for (String title : groupedBooksByTitle.keySet()) {
-            List<Book> booksOfSeries = groupedBooksByTitle.get(title);
-            Book book = booksOfSeries.remove(0);
-            group.add(book);
+        final var bucket = new Bucket();
+        for (Map.Entry<String, List<Book>> titleToBook : groupedBooksByTitle.entrySet()) {
+            List<Book> booksOfSeries = titleToBook.getValue();
+            final var book = booksOfSeries.remove(0);
+            bucket.add(book);
         }
         cleanEmptyList();
-        return group;
+        return bucket;
     }
 
     void cleanEmptyList() {
