@@ -15,6 +15,6 @@ class BasketTest {
     void getPrice_GivenTwiceTheSameBook() {
         Basket sut = new Basket();
         double current = sut.getPrice(new Book("hp1"), new Book("hp1"));
-        assertEquals(8.0, current);
+        assertEquals(16.0, current);
     }
 }
