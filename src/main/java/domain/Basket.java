@@ -13,8 +13,10 @@ public class Basket {
     public double getDiscountRate(final Book... books) {
         if(books.length == 1) {
             return 1.0;
-        } else if (Arrays.stream(books).map(Book::getTitle).distinct().count() == books.length) {
+        } else if (books.length == 2 && Arrays.stream(books).map(Book::getTitle).distinct().count() == books.length) {
             return 0.95;
+        } else if (books.length == 3 && Arrays.stream(books).map(Book::getTitle).distinct().count() == books.length) {
+            return 0.90;
         }
         return 1.0;
     }
