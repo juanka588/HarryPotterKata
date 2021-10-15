@@ -1,35 +1,41 @@
 package domain;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class BasketTest {
+    final static Book HARRY_POTTER_1 = new Book("Harry Potter and the Philosopher's Stone", 8.0);
+    final static Book HARRY_POTTER_2 = new Book("Harry Potter and the Chamber of Secrets", 9.0);
+    final static Book HARRY_POTTER_3 = new Book("Harry Potter and the Prisoner of Azkaban", 10.0);
+    final static Book HARRY_POTTER_4 = new Book("Harry Potter and the Goblet of Fire", 11.0);
+    final static Book HARRY_POTTER_5 = new Book("Harry Potter and the Order of the Phoenix", 12.0);
 
-    @org.junit.jupiter.api.Test
-    void getPrice_GivenOneBook_ThenReturnsBasePrice() {
-        Basket sut = new Basket();
-        double current = sut.getPrice(new Book("hp1"));
-        assertEquals(Basket.BASE_PRICE, current);
+    @Test
+    void getPrice_GivenOneBook_ItReturnsItsPrice() {
+        final Basket sut = new Basket();
+        assertEquals(HARRY_POTTER_1.getPrice(), sut.getPrice(HARRY_POTTER_1));
     }
 
-    @org.junit.jupiter.api.Test
-    void getPrice_GivenTwiceTheSameBook_ThenReturnsTwiceTheBasePrice() {
-        Basket sut = new Basket();
-        double current = sut.getPrice(new Book("hp1"), new Book("hp1"));
-        assertEquals(Basket.BASE_PRICE * 2, current);
+    @Test
+    void getPrice_GivenTwiceTheSameBook_ItSumsPrices() {
+        final Basket sut = new Basket();
+        assertEquals(HARRY_POTTER_1.getPrice() + HARRY_POTTER_1.getPrice(),
+                sut.getPrice(HARRY_POTTER_1, HARRY_POTTER_1));
     }
 
-    @org.junit.jupiter.api.Test
-    void getPrice_GivenTwoDifferentBooks_ThenReturnsTwiceTheBasePriceWith5PercentDiscount() {
-        Basket sut = new Basket();
-        double current = sut.getPrice(new Book("hp1"), new Book("hp2"));
-        assertEquals(Basket.BASE_PRICE * 2 * .95, current);
+    @Test
+    void getPrice_GivenTwoDifferentBooks_ItSumsPricesAndApplies5PercentDiscount() {
+        final Basket sut = new Basket();
+        assertEquals((HARRY_POTTER_1.getPrice() + HARRY_POTTER_2.getPrice()) * .95,
+                sut.getPrice(HARRY_POTTER_1, HARRY_POTTER_2));
     }
 
-    @org.junit.jupiter.api.Test
-    void getPrice_GivenThreeDifferentBooks_ThenReturnsThreeTimesTheBasePriceWith10PercentDiscount() {
-        Basket sut = new Basket();
-        double current = sut.getPrice(new Book("hp1"), new Book("hp2"), new Book("hp3"));
-        assertEquals(Basket.BASE_PRICE * 3 * .9, current);
+    @Test
+    void getPrice_GivenThreeDifferentBooks_ItSumsPricesAndApplies10PercentDiscount() {
+        final Basket sut = new Basket();
+        assertEquals((HARRY_POTTER_1.getPrice() + HARRY_POTTER_2.getPrice() + HARRY_POTTER_3.getPrice()) * .9,
+                sut.getPrice(HARRY_POTTER_1, HARRY_POTTER_2, HARRY_POTTER_3));
     }
 }
