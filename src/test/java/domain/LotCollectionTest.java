@@ -25,8 +25,7 @@ class LotCollectionTest {
 
     private static Stream<Arguments> provideBooksAndExpectedTotalPrice() {
         return Stream.of(
-                Arguments.of(new Book[]{BOOK_1, BOOK_2}, 3),
-                Arguments.of(new Book[]{BOOK_1, BOOK_2},3),
+                Arguments.of(new Book[]{BOOK_1, BOOK_2}, 3 * 0.9),
                 Arguments.of(new Book[]{BOOK_1, BOOK_2, BOOK_1}, 4),
                 Arguments.of(new Book[]{BOOK_1, BOOK_2, BOOK_1, BOOK_3, BOOK_3, BOOK_1, BOOK_2}, 13)
         );

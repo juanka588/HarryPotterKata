@@ -2,19 +2,28 @@ package domain;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
 public class LotCollection {
 
     private final Set<Lot> lots;
+    private final Map<Predicate<Lot>, Double> discountRules;
 
-    private LotCollection() {
+    private LotCollection(Map<Predicate<Lot>, Double> discountRules) {
         this.lots = new HashSet<>();
+        this.discountRules = discountRules;
     }
 
     public static LotCollection of(Book... books) {
-        final LotCollection result = new LotCollection();
+        final Map<Predicate<Lot>, Double> discounts = Map.of(
+                lot -> lot.size() == 2, 0.95,
+                lot -> lot.size() == 3, 0.90,
+                lot -> lot.size() == 4, 0.80,
+                lot -> lot.size() == 5, 0.75
+        );
+        final LotCollection result = new LotCollection(discounts);
         Arrays.stream(books).forEach(result::add);
         return result;
     }
@@ -30,7 +39,11 @@ public class LotCollection {
     }
 
     private Runnable addNewLotOf(Book book) {
-        return () -> lots.add(Lot.of(book));
+        return () -> {
+            final Lot newLot = new Lot(discountRules);
+            newLot.add(book);
+            lots.add(newLot);
+        };
     }
 
     private Predicate<Lot> notContain(Book book) {
@@ -54,15 +67,11 @@ public class LotCollection {
 
     private static class Lot {
         private final Set<Book> books;
+        private Map<Predicate<Lot>, Double> discountRules;
 
-        private Lot() {
+        private Lot(Map<Predicate<Lot>, Double> discountRules) {
+            this.discountRules = discountRules;
             this.books = new HashSet<>();
-        }
-
-        public static Lot of(Book book) {
-            final Lot result = new Lot();
-            result.add(book);
-            return result;
         }
 
 
@@ -82,7 +91,19 @@ public class LotCollection {
         public double getPrice() {
             return books.stream()
                     .mapToDouble(Book::getPrice)
-                    .sum();
+                    .sum() * discountRate();
+        }
+
+        private double discountRate() {
+            final double discountRate = discountRules.entrySet()
+                    .stream()
+                    .filter(e -> e.getKey().test(this))
+                    .mapToDouble(Map.Entry::getValue).sum();
+            return discountRate == 0 ? 1 : discountRate;
+        }
+
+        public int size() {
+            return books.size();
         }
     }
 }

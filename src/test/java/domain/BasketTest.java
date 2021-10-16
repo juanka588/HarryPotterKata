@@ -2,6 +2,8 @@ package domain;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -11,6 +13,12 @@ class BasketTest {
     final static Book HARRY_POTTER_3 = new Book("3 - Harry Potter and the Prisoner of Azkaban", 10.0);
     final static Book HARRY_POTTER_4 = new Book("4 - Harry Potter and the Goblet of Fire", 11.0);
     final static Book HARRY_POTTER_5 = new Book("5 - Harry Potter and the Order of the Phoenix", 12.0);
+
+    final static Book[] LOT_2 = new Book[]{HARRY_POTTER_1, HARRY_POTTER_2};
+    final static Book[] LOT_3 = new Book[]{HARRY_POTTER_1, HARRY_POTTER_2, HARRY_POTTER_3};
+    final static Book[] LOT_4 = new Book[]{HARRY_POTTER_1, HARRY_POTTER_2, HARRY_POTTER_3, HARRY_POTTER_4};
+    final static Book[] LOT_5 = new Book[]{HARRY_POTTER_1, HARRY_POTTER_2, HARRY_POTTER_3, HARRY_POTTER_4, HARRY_POTTER_5};
+
 
     @Test
     void getPrice_GivenOneBook_ItReturnsItsPrice() {
@@ -26,38 +34,38 @@ class BasketTest {
     }
 
     @Test
-    void getPrice_Given2DifferentBooks_ItSumsPricesAndApplies5PercentDiscount() {
+    void getPrice_GivenATwoBooksLot_ItSumsPricesAndApplies5PercentDiscount() {
         final Basket sut = new Basket();
         assertEquals((HARRY_POTTER_1.getPrice() +
                         HARRY_POTTER_2.getPrice())
                         * .95,
-                sut.getPrice(HARRY_POTTER_1, HARRY_POTTER_2));
+                sut.getPrice(LOT_2));
     }
 
     @Test
-    void getPrice_Given3DifferentBooks_ItSumsPricesAndApplies10PercentDiscount() {
+    void getPrice_GivenAThreeBooksLot_ItSumsPricesAndApplies10PercentDiscount() {
         final Basket sut = new Basket();
         assertEquals((HARRY_POTTER_1.getPrice() +
                         HARRY_POTTER_2.getPrice() +
                         HARRY_POTTER_3.getPrice())
                         * .9,
-                sut.getPrice(HARRY_POTTER_1, HARRY_POTTER_2, HARRY_POTTER_3));
+                sut.getPrice(LOT_3));
     }
 
     @Test
-    void getPrice_Given4DifferentBooks_ItSumsPricesAndApplies20PercentDiscount() {
+    void getPrice_GivenAFourBooksLot_ItSumsPricesAndApplies20PercentDiscount() {
         final Basket sut = new Basket();
         assertEquals((HARRY_POTTER_1.getPrice() +
                         HARRY_POTTER_2.getPrice() +
                         HARRY_POTTER_3.getPrice() +
                         HARRY_POTTER_4.getPrice())
                         * .8,
-                sut.getPrice(HARRY_POTTER_1, HARRY_POTTER_2, HARRY_POTTER_3, HARRY_POTTER_4));
+                sut.getPrice(LOT_4));
     }
 
 
     @Test
-    void getPrice_Given5DifferentBooks_ItSumsPricesAndApplies25PercentDiscount() {
+    void getPrice_GivenAFiveBooksLot_ItSumsPricesAndApplies25PercentDiscount() {
         final Basket sut = new Basket();
         assertEquals((HARRY_POTTER_1.getPrice() +
                         HARRY_POTTER_2.getPrice() +
@@ -65,6 +73,18 @@ class BasketTest {
                         HARRY_POTTER_4.getPrice() +
                         HARRY_POTTER_5.getPrice())
                         * .75,
-                sut.getPrice(HARRY_POTTER_1, HARRY_POTTER_2, HARRY_POTTER_3, HARRY_POTTER_4, HARRY_POTTER_5));
+                sut.getPrice(LOT_5));
+    }
+
+    @Test
+    void getPrice_GivenAFiveBooksLotANDAnotherBook_ItSumsPricesAndApplies25PercentDiscountToTheLotAndAddsTheOtherBookPrice() {
+        final Basket sut = new Basket();
+        assertEquals((HARRY_POTTER_1.getPrice() +
+                        HARRY_POTTER_2.getPrice() +
+                        HARRY_POTTER_3.getPrice() +
+                        HARRY_POTTER_4.getPrice() +
+                        HARRY_POTTER_5.getPrice())
+                        * .75 + HARRY_POTTER_1.getPrice(),
+                sut.getPrice(HARRY_POTTER_1, HARRY_POTTER_2, HARRY_POTTER_3, HARRY_POTTER_4, HARRY_POTTER_5, HARRY_POTTER_1));
     }
 }
