@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class BasketTest {
-    final static Book HARRY_POTTER_1 = new Book("Harry Potter and the Philosopher's Stone", 8.0);
-    final static Book HARRY_POTTER_2 = new Book("Harry Potter and the Chamber of Secrets", 9.0);
-    final static Book HARRY_POTTER_3 = new Book("Harry Potter and the Prisoner of Azkaban", 10.0);
-    final static Book HARRY_POTTER_4 = new Book("Harry Potter and the Goblet of Fire", 11.0);
-    final static Book HARRY_POTTER_5 = new Book("Harry Potter and the Order of the Phoenix", 12.0);
+    final static Book HARRY_POTTER_1 = new Book("1 - Harry Potter and the Philosopher's Stone", 8.0);
+    final static Book HARRY_POTTER_2 = new Book("2 - Harry Potter and the Chamber of Secrets", 9.0);
+    final static Book HARRY_POTTER_3 = new Book("3 - Harry Potter and the Prisoner of Azkaban", 10.0);
+    final static Book HARRY_POTTER_4 = new Book("4 - Harry Potter and the Goblet of Fire", 11.0);
+    final static Book HARRY_POTTER_5 = new Book("5 - Harry Potter and the Order of the Phoenix", 12.0);
 
     @Test
     void getPrice_GivenOneBook_ItReturnsItsPrice() {

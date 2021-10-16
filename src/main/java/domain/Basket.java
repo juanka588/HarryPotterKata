@@ -1,26 +1,16 @@
 package domain;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Basket {
 
-    private final Set<Discount> disounctRules;
-
-    public Basket() {
-        this.disounctRules = new HashSet<>();
-    }
-
     public double getPrice(Book... books) {
-        final double totalPrice = Arrays.stream(books)
-                .mapToDouble(Book::getPrice)
-                .sum();
-        return totalPrice * getDiscountRate(books);
+        return LotCollection.of(books)
+                .getTotalPrice() * getDiscountRate(books);
     }
 
     private double getDiscountRate(final Book... books) {
-        if(books.length == 1) {
+        if (books.length == 1) {
             return 1.0;
         } else if (books.length == 2 && getDistinctBookNumber(books) == books.length) {
             return 0.95;
