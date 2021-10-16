@@ -2,7 +2,6 @@ package domain;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -11,24 +10,12 @@ public class LotCollection {
     private final Set<Lot> lots;
     private final DiscountRule[] discountRules;
 
-    private LotCollection(DiscountRule... discountRules) {
+    public LotCollection(DiscountRule... discountRules) {
         this.lots = new HashSet<>();
         this.discountRules = discountRules;
     }
 
-    public static LotCollection of(Book... books) {
-        final var discounts = new DiscountRule[]{
-                new DiscountRule(lot -> lot.size() == 2, 0.05),
-                new DiscountRule(lot -> lot.size() == 3, 0.1),
-                new DiscountRule(lot -> lot.size() == 4, 0.20),
-                new DiscountRule(lot -> lot.size() == 5, 0.25)
-        };
-        final LotCollection lotCollection = new LotCollection(discounts);
-        lotCollection.addAll(books);
-        return lotCollection;
-    }
-
-    private void addAll(Book... books) {
+    public void addAll(Book... books) {
         Arrays.stream(books).forEach(this::add);
     }
 
@@ -38,11 +25,11 @@ public class LotCollection {
                 .findFirst()
                 .ifPresentOrElse(
                         lot -> lot.add(book),
-                        addNewLotOf(book)
+                        addNewLot(book)
                 );
     }
 
-    private Runnable addNewLotOf(Book book) {
+    private Runnable addNewLot(Book book) {
         return () -> {
             final Lot newLot = new Lot(discountRules);
             newLot.add(book);
