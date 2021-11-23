@@ -34,10 +34,13 @@ class BasketTest {
     @Test
     void getPrice_GivenATwoBooksLot_ItSumsPricesAndApplies5PercentDiscount() {
         final Basket sut = new Basket();
-        assertEquals((HARRY_POTTER_1.getPrice() +
-                        HARRY_POTTER_2.getPrice())
-                        * .95,
+        assertEquals(applyDiscountPercent(5, (HARRY_POTTER_1.getPrice() +
+                        HARRY_POTTER_2.getPrice())),
                 sut.getPrice(LOT_2));
+    }
+
+    private double applyDiscountPercent(int percent, double price) {
+        return price * (1-(percent/100d));
     }
 
     @Test
